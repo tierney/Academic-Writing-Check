@@ -221,13 +221,13 @@ sub fixPassive{
 "withheld","withstood","wrung",
 "written");
   my $regex = '\b(am|are|were|being|is|been|was|be)\b(\s+)(\w+ed|('.join('|',@irregulars).'))\b';
-  return $str =~ s/$regex/\x{EFFF}$passive_color$1$def_color$2$passive_color$3$def_color\x{EFFF}/goi;
+  return $str =~ s/$regex/\x{EFFF}$def_color$passive_color$1$def_color$2$passive_color$3$def_color\x{EFFF}/goi;
 }
 
 sub fixWeasel{
  #TODO add better support for wordfile
  my $regex ='\b(might|appears\s+to\s+be|it\s+is\s+easy\s+to\s+see|theoretically|actual|In\s+this\s+paper|almost|many|various|very|fairly|several|extremely|exceedingly|quite|remarkably|few|surprisingly|mostly|largely|huge|tiny|((are|is) a number)|excellent|interestingly|significantly|substantially|clearly|vast|relatively|completely)\b';
- return $str =~ s/$regex/\x{EFFF}$weasel_color$1$def_color\x{EFFF}/goi;
+ return $str =~ s/$regex/\x{EFFF}$def_color$weasel_color$1$def_color\x{EFFF}/goi;
 }
 
 sub fixDups{
@@ -277,7 +277,7 @@ one \s of \s the \s most| respective(?:ly)? |
 utilize | very  | the fact that |
 rather | little | pretty #from the last chapter
 }x;
-  my $c = $str =~ s/\b($regex)\b/\x{EFFF}$strunk_color$1$def_color\x{EFFF}/g;
+  my $c = $str =~ s/\b($regex)\b/\x{EFFF}$def_color$strunk_color$1$def_color\x{EFFF}/g;
   $c += $str =~ s/([.?]\s*However)/\x{EFFF}$strunk_color$1$def_color\x{EFFF}/g;
   return $c;
 }
